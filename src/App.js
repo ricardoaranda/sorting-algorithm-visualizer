@@ -20,24 +20,31 @@ function App() {
       return array;
   });
   useEffect(() => {
-      setBarArray(() => {
-          let array = [];
-
-          for (let i = 0; i < arraySize; i++) {
-              array.push(i);
-          }
-
-          return array;
-      });
+    setBarArray(() => {
+        let array = [];
+        for (let i = 0; i < arraySize; i++) {
+            array.push(i);
+        }
+        return array;
+    });
   }, [arraySize]);
 
-  let newInputHandler = (event) => {
+  const newInputHandler = (event) => {
       let input = event.target.value;
       setArraySize(() => input);
   }
 
-  let randomizeHandler = (event) => {
-    console.log('CLICK');
+  const randomizeHandler = (event) => {
+    console.log("randomizeHandler")
+    setBarArray(() => {
+      for (let i = barArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [barArray[i], barArray[j]] = [barArray[j], barArray[i]];
+      }
+      let newArray = barArray.map((num) => num);
+
+      return newArray;
+    });
   }
   
   return (

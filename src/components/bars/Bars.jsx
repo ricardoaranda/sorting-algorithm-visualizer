@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StyledBars } from '../../styled/styled';
 
 import Bar from './bar/Bar';
