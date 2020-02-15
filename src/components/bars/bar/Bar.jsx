@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { BarContext } from '../../../context/BarContext';
+import React from 'react';
+// import { BarContext } from '../../../context/BarContext';
 
 function Bar(props) {
-    const value = useContext(BarContext);
+    // const value = useContext(BarContext);
 
     function normalize(val, max, min) { 
         let a = 3;
@@ -13,7 +13,7 @@ function Bar(props) {
 
     let style = {
         display: 'inline-block',
-        backgroundColor: `${props.number === value ? 'rgb(150, 220, 250)' : 'rgb(196, 133, 191)'}`,
+        backgroundColor: `${props.selected ? 'rgb(150, 220, 250)' : 'rgb(196, 133, 191)'}`,
         color: 'rrgb(212, 212, 212)',
         margin: '0 2px',
         width: '10px',
@@ -26,6 +26,3 @@ function Bar(props) {
 }
 
 export default Bar;
-
-// 'rgb(150, 220, 250)'
-// 'rgb(212, 212, 212)'

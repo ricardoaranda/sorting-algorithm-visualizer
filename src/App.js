@@ -61,24 +61,26 @@ function App() {
         arr[secondIndex] = temp;
         setBarArray(() => [...arr]);
         resolve(arr);
-      }, 10);
+      }, 20);
     });
   }
 
-  let j = 0;
+  let [barIndex, setBarIndex] = useState(null);
   const bubbleSort = async () => {
     let len = barArray.length, i, stop;
       for (i=0; i < len; i++) {
-        for (j=0, stop=len-i; j < stop; j++) {
-          if (barArray[j] > barArray[j+1]) {
+        for (barIndex=0, stop=len-i; barIndex < stop; barIndex++) {
+          setBarIndex(() => barIndex);
+          if (barArray[barIndex] > barArray[barIndex+1]) {
             try {
-              await swap(barArray, j, j+1);
+              await swap(barArray, barIndex, barIndex+1);
             }
             catch(e) {
               console.log("error swapping?", e);
             }
           }
         }
+        setBarIndex(null);
       }
   }
   
@@ -89,7 +91,7 @@ function App() {
         <button onClick={shuffleHandler}>Shuffle</button>
         <button onClick={bubbleSort}>Sort</button>
       </StyledAppHeader>
-      <BarContext.Provider value={j}>
+      <BarContext.Provider value={barIndex}>
         <Layout barArray={barArray} arraySize={arraySize} />
       </BarContext.Provider>
     </StyledApp>
