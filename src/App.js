@@ -3,8 +3,12 @@ import { StyledApp, StyledAppHeader } from '../src/styled/styled';
 
 import Layout from '../src/components/layout/Layout';
 import Input from '../src/components/input/Input';
+import { BarContext } from './context/BarContext';
 
 function App() {
+  /*
+  * state and effects
+  */
   let maxSize = 100;
   const [arraySize, setArraySize] = useState(10);
   useEffect(() => {
@@ -29,31 +33,65 @@ function App() {
     });
   }, [arraySize]);
 
+  /*
+  * handler functions 
+  * shuffle, bubble sort
+  */
+
   const newInputHandler = (event) => {
       let input = event.target.value;
       setArraySize(() => input);
   }
 
-  const randomizeHandler = (event) => {
-    console.log("randomizeHandler")
+  const shuffleHandler = () => {
     setBarArray(() => {
       for (let i = barArray.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [barArray[i], barArray[j]] = [barArray[j], barArray[i]];
       }
-      let newArray = barArray.map((num) => num);
-
-      return newArray;
+      return [...barArray];
     });
+  }
+
+  const swap = (arr, firstIndex, secondIndex) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        var temp = arr[firstIndex];
+        arr[firstIndex] = arr[secondIndex];
+        arr[secondIndex] = temp;
+        setBarArray(() => [...arr]);
+        resolve(arr);
+      }, 10);
+    });
+  }
+
+  let j = 0;
+  const bubbleSort = async () => {
+    let len = barArray.length, i, stop;
+      for (i=0; i < len; i++) {
+        for (j=0, stop=len-i; j < stop; j++) {
+          if (barArray[j] > barArray[j+1]) {
+            try {
+              await swap(barArray, j, j+1);
+            }
+            catch(e) {
+              console.log("error swapping?", e);
+            }
+          }
+        }
+      }
   }
   
   return (
     <StyledApp>
       <StyledAppHeader>
         <Input arraySize={arraySize} handler={newInputHandler} maxSize={maxSize} />
-        <button onClick={randomizeHandler}>Randomize</button>
+        <button onClick={shuffleHandler}>Shuffle</button>
+        <button onClick={bubbleSort}>Sort</button>
       </StyledAppHeader>
-      <Layout barArray={barArray} arraySize={arraySize} />
+      <BarContext.Provider value={j}>
+        <Layout barArray={barArray} arraySize={arraySize} />
+      </BarContext.Provider>
     </StyledApp>
   );
 }
