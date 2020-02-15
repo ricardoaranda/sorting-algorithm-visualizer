@@ -6,7 +6,7 @@ import Bars from '../bars/Bars';
 function Layout(props) {
     return (
         <StyledLayout>
-            <Bars size={props.arraySize} />
+            <Bars barArray={props.barArray} size={props.arraySize} />
         </StyledLayout>
     );
 }

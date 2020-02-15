@@ -10,6 +10,27 @@ function App() {
   useEffect(() => {
   }, [arraySize]);
 
+  const [barArray, setBarArray] = useState(() => {
+      let array = [];
+
+      for (let i = 0; i < arraySize; i++) {
+          array.push(i);
+      }
+
+      return array;
+  });
+  useEffect(() => {
+      setBarArray(() => {
+          let array = [];
+
+          for (let i = 0; i < arraySize; i++) {
+              array.push(i);
+          }
+
+          return array;
+      });
+  }, [arraySize]);
+
   let newInputHandler = (event) => {
       let input = event.target.value;
       setArraySize(() => input);
@@ -25,7 +46,7 @@ function App() {
         <Input arraySize={arraySize} handler={newInputHandler} maxSize={maxSize} />
         <button onClick={randomizeHandler}>Randomize</button>
       </StyledAppHeader>
-      <Layout arraySize={arraySize} />
+      <Layout barArray={barArray} arraySize={arraySize} />
     </StyledApp>
   );
 }
