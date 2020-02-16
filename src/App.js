@@ -32,9 +32,8 @@ function App() {
         return array;
     });
   }, [arraySize]);
-
   /*
-  * handler functions 
+  * handler functions:
   * shuffle, bubble sort
   */
 
@@ -53,24 +52,38 @@ function App() {
     });
   }
 
+  let millisecords = 10;
+
   const swap = (arr, firstIndex, secondIndex) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        var temp = arr[firstIndex];
+        let temp = arr[firstIndex];
         arr[firstIndex] = arr[secondIndex];
         arr[secondIndex] = temp;
         setBarArray(() => [...arr]);
         resolve(arr);
-      }, 20);
+      }, millisecords);
+    });
+  }
+
+  const next = (arr) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        setBarArray([...arr]);
+        resolve(arr);
+      }, millisecords);
     });
   }
 
   let [barIndex, setBarIndex] = useState(null);
+
   const bubbleSort = async () => {
     let len = barArray.length, i, stop;
       for (i=0; i < len; i++) {
-        for (barIndex=0, stop=len-i; barIndex < stop; barIndex++) {
+        for (barIndex = 0, stop = len - i; barIndex < stop; barIndex++) {
+          // color selected element
           setBarIndex(() => barIndex);
+          // swap 
           if (barArray[barIndex] > barArray[barIndex+1]) {
             try {
               await swap(barArray, barIndex, barIndex+1);
@@ -79,9 +92,17 @@ function App() {
               console.log("error swapping?", e);
             }
           }
+          else {
+            try {
+              await next(barArray);
+            }
+            catch(e) {
+              console.log(e);
+            }
+          }
         }
-        setBarIndex(null);
       }
+      setBarIndex(null);
   }
   
   return (
