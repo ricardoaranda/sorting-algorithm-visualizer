@@ -32,17 +32,24 @@ function App() {
         return array;
     });
   }, [arraySize]);
+
+  const [isRunning, setIsRunning] = useState('hard-stop');
+  useEffect(() => {
+    if (isRunning) {
+      bubbleSort();
+    }
+  }, [isRunning]);
+
   /*
   * handler functions:
   * shuffle, bubble sort
   */
-
   const newInputHandler = (event) => {
-      let input = event.target.value;
-      setArraySize(() => input);
+    let input = event.target.value;
+    setArraySize(() => input);
   }
 
-  const shuffleHandler = () => {
+  const shuffle = () => {
     setBarArray(() => {
       for (let i = barArray.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -76,11 +83,13 @@ function App() {
   }
 
   let [barIndex, setBarIndex] = useState(null);
-
   const bubbleSort = async () => {
     let len = barArray.length, i, stop;
       for (i=0; i < len; i++) {
         for (barIndex = 0, stop = len - i; barIndex < stop; barIndex++) {
+          if(!isRunning) {
+            return;
+          }
           // color selected element
           setBarIndex(() => barIndex);
           // swap 
@@ -103,14 +112,19 @@ function App() {
         }
       }
       setBarIndex(null);
+      setIsRunning(false);
+  }
+
+  const sortHandler = () => {
+    setIsRunning(true);
   }
   
   return (
     <StyledApp>
       <StyledAppHeader>
         <Input arraySize={arraySize} handler={newInputHandler} maxSize={maxSize} />
-        <button onClick={shuffleHandler}>Shuffle</button>
-        <button onClick={bubbleSort}>Sort</button>
+        <button onClick={shuffle}>Shuffle</button>
+        <button onClick={sortHandler}>Sort</button>
       </StyledAppHeader>
       <BarContext.Provider value={barIndex}>
         <Layout barArray={barArray} arraySize={arraySize} />
