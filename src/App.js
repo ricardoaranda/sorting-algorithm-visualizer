@@ -111,6 +111,7 @@ function App() {
           }
         }
       }
+      isRunning = false;
       setBarIndex(null);
   }
 
