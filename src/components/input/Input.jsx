@@ -14,7 +14,7 @@ function Input(props) {
 
     return (
         <StyledInput>
-            <select type="number" onChange={props.handler} value={props.arraySize}>
+            <select type="number" onChange={props.handler} value={props.arraySize} disabled={props.disabled}>
                 {optionArray()}
             </select>
         </StyledInput>

@@ -1,10 +1,11 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect, useRef }  from 'react';
 import { StyledApp, StyledAppHeader } from '../src/styled/styled';
 
 import Layout from '../src/components/layout/Layout';
 import Input from '../src/components/input/Input';
 import { BarContext } from './context/BarContext';
 
+let isRunning = false;  // mutable global variable needs to be accessible by asyc function
 function App() {
   /*
   * state and effects
@@ -33,13 +34,6 @@ function App() {
     });
   }, [arraySize]);
 
-  const [isRunning, setIsRunning] = useState('hard-stop');
-  useEffect(() => {
-    if (isRunning) {
-      bubbleSort();
-    }
-  }, [isRunning]);
-
   /*
   * handler functions:
   * shuffle, bubble sort
@@ -47,6 +41,7 @@ function App() {
   const newInputHandler = (event) => {
     let input = event.target.value;
     setArraySize(() => input);
+    isRunning = false;
   }
 
   const shuffle = () => {
@@ -84,10 +79,15 @@ function App() {
 
   let [barIndex, setBarIndex] = useState(null);
   const bubbleSort = async () => {
+    if (isRunning) {
+      return;
+    }
+    isRunning = true;
     let len = barArray.length, i, stop;
       for (i=0; i < len; i++) {
         for (barIndex = 0, stop = len - i; barIndex < stop; barIndex++) {
-          if(!isRunning) {
+          if (!isRunning) {
+            setBarIndex(null);
             return;
           }
           // color selected element
@@ -112,19 +112,19 @@ function App() {
         }
       }
       setBarIndex(null);
-      setIsRunning(false);
   }
 
-  const sortHandler = () => {
-    setIsRunning(true);
+  const stopHandler = () => {
+    isRunning = false;
   }
   
   return (
     <StyledApp>
       <StyledAppHeader>
-        <Input arraySize={arraySize} handler={newInputHandler} maxSize={maxSize} />
-        <button onClick={shuffle}>Shuffle</button>
-        <button onClick={sortHandler}>Sort</button>
+        <Input arraySize={arraySize} handler={newInputHandler} maxSize={maxSize} disabled={isRunning ? true : false}/>
+        <button onClick={shuffle} disabled={isRunning ? true : false}>Shuffle</button>
+        <button onClick={bubbleSort}>Sort</button>
+        <button onClick={stopHandler}>Stop</button>
       </StyledAppHeader>
       <BarContext.Provider value={barIndex}>
         <Layout barArray={barArray} arraySize={arraySize} />
