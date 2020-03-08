@@ -12,7 +12,7 @@ function App() {
   * state and effects
   */
   let maxSize = 100;
-  const [arraySize, setArraySize] = useState(10);
+  const [arraySize, setArraySize] = useState(50);
   useEffect(() => {
   }, [arraySize]);
 
