@@ -4,6 +4,9 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 
 const headerHeight = '55px';
+const enabledColor = 'rgb(212,212,212)';
+const disabledColor = 'rgb(95,95,95) !important';
+const disabledBorder = '1px solid rgb(95,95,95)';
 
 export const StyledApp = styled.div `
     position: relative;
@@ -45,11 +48,11 @@ export const StyledInput = styled.div `
     padding: 0px 0px;
 `;
 
-export const StyledButton = styled(Button)`
+export const StyledButton = styled(Button) `
     margin: 11px 5px;
 
-    color: rgb(212,212,212);
-    border-color: rgb(212,212,212);
+    color: ${props => props.disabled ? disabledColor : enabledColor};
+    border-color: ${props => props.disabled ? disabledColor : enabledColor};
     transition: color 0.3s linear;
     -webkit-transition: color 0.3s linear;
     -moz-transition: color 0.3s linear;
@@ -58,11 +61,20 @@ export const StyledButton = styled(Button)`
     }
 `;
 
-export const SortButton = styled(StyledButton)`
-
+export const SortButton = styled(StyledButton) ` 
+    color: rgb(146,193,125);
+    border-color: rgb(146,193,125);
+    &:hover {
+        color: rgb(176,223,155);
+    }
 `;
 
-export const StopButton = styled(StyledButton)`
+export const StopButton = styled(StyledButton) `
+    color: rgb(237,101,90);
+    border-color: rgb(237,101,90);
+    &:hover {
+        color: rgb(267,131,120);
+    }
 `;
 
 export const StyledSelect = styled(Select) `
@@ -70,18 +82,16 @@ export const StyledSelect = styled(Select) `
     padding: 0px 0px;
     height: 30px;
 
-    color: rgb(212,212,212);
-    /* border-color: rgb(212,212,212); */
-    border: 1px solid rgb(212,212,212);
+    color: ${props => props.disabled ? disabledColor : enabledColor};
+    border: ${props => props.disabled ? disabledBorder : '1px solid rgb(212,212,212)'};
     transition: color 0.3s linear;
     -webkit-transition: color 0.3s linear;
     -moz-transition: color 0.3s linear;
     &:hover {
         color: rgb(255,255,255);
     }
-
 `;
 
-export const StyledFormControl = styled(FormControl)`
+export const StyledFormControl = styled(FormControl) `
     /* margin: 11px 5px; */
 `;
