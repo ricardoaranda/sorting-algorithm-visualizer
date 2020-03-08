@@ -55,7 +55,7 @@ function App() {
     });
   }
 
-  let millisecords = 10;
+  let millisecords = 15;
 
   const swap = (arr, firstIndex, secondIndex) => {
     return new Promise((resolve, reject) => {
