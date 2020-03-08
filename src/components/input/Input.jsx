@@ -1,5 +1,7 @@
 import React from 'react';
-import {StyledInput} from '../../styled/styled';
+import {StyledInput, StyledSelect, StyledFormControl } from '../../styled/styled';
+import { StylesProvider } from '@material-ui/core/styles';
+import FormControl from '@material-ui/core/FormControl';
 
 function Input(props) {
     let optionArray = () => {
@@ -13,11 +15,13 @@ function Input(props) {
     }
 
     return (
-        <StyledInput>
-            <select type="number" onChange={props.handler} value={props.arraySize} disabled={props.disabled}>
-                {optionArray()}
-            </select>
-        </StyledInput>
+        <StylesProvider injectFirst>
+            <StyledFormControl variant="outlined" size="small">    
+                <StyledSelect type="number" onChange={props.handler} value={props.arraySize} disabled={props.disabled}>
+                    {optionArray()}
+                </StyledSelect>
+            </StyledFormControl>
+        </StylesProvider>
     );
 }
 

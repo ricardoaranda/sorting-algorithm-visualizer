@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef }  from 'react';
-import { StyledApp, StyledAppHeader } from '../src/styled/styled';
+import React, { useState, useEffect }  from 'react';
+import { StyledApp, StyledAppHeader, StyledButton, SortButton, StopButton } from '../src/styled/styled';
+import { StylesProvider } from '@material-ui/core/styles';
 
 import Layout from '../src/components/layout/Layout';
 import Input from '../src/components/input/Input';
@@ -122,10 +123,12 @@ function App() {
   return (
     <StyledApp>
       <StyledAppHeader>
+      <StylesProvider injectFirst={true}>
         <Input arraySize={arraySize} handler={newInputHandler} maxSize={maxSize} disabled={isRunning ? true : false}/>
-        <button onClick={shuffle} disabled={isRunning ? true : false}>Shuffle</button>
-        <button onClick={bubbleSort}>Sort</button>
-        <button onClick={stopHandler}>Stop</button>
+        <StyledButton size="small" variant="outlined" onClick={shuffle} disabled={isRunning ? true : false}>Shuffle</StyledButton>
+        <SortButton size="small" variant="outlined" onClick={bubbleSort}>Sort</SortButton>
+        <StopButton size="small" variant="outlined" onClick={stopHandler}>Stop</StopButton>
+      </StylesProvider>
       </StyledAppHeader>
       <BarContext.Provider value={barIndex}>
         <Layout barArray={barArray} arraySize={arraySize} />
