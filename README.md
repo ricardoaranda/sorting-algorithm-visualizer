@@ -1,3 +1,6 @@
+### Demo
+https://ricardoaranda.github.io/sorting-algorithm-visualizer/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
